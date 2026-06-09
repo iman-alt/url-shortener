@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>URL Shortener</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f1a;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      color: #7c6aff;
+    }
+
+    p.subtitle {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 28px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid #3a3a5a;
+      background: #12122a;
+      color: #e0e0e0;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #7c6aff;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #7c6aff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #6a55ee; }
+
+    .result {
+      margin-top: 24px;
+      background: #12122a;
+      border: 1px solid #2a2a4a;
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .result p { font-size: 0.85rem; color: #888; margin-bottom: 6px; }
+
+    .result a {
+      color: #7c6aff;
+      font-size: 1rem;
+      font-weight: 600;
+      word-break: break-all;
+      text-decoration: none;
+    }
+
+    .result a:hover { text-decoration: underline; }
+
+    .copy-btn {
+      margin-top: 10px;
+      background: #2a2a4a;
+      font-size: 0.85rem;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .copy-btn:hover { background: #3a3a5a; }
+
+    .error {
+      margin-top: 16px;
+      background: #2a1a1a;
+      border: 1px solid #5a2a2a;
+      border-radius: 10px;
+      padding: 14px;
+      color: #ff6b6b;
+      font-size: 0.9rem;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      background: #2a2a4a;
+      color: #888;
+      border-radius: 20px;
+      padding: 3px 10px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">Project 16 — Portfolio</span>
+    <h1>🔗 URL Shortener</h1>
+    <p class="subtitle">Paste a long URL and get a short one instantly.</p>
+
+    <form method="POST" action="/">
+      <input
+        type="text"
+        name="url"
+        placeholder="https://your-long-url.com/goes/here"
+        value="{{ request.form.get('url', '') }}"
+      />
+      <button type="submit">Shorten URL →</button>
+    </form>
+
+    {% if short_url %}
+    <div class="result">
+      <p>Your short link:</p>
+      <a href="{{ short_url }}" target="_blank">{{ short_url }}</a>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('{{ short_url }}'); this.innerText='✅ Copied!'">
+        📋 Copy to Clipboard
+      </button>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="error">⚠️ {{ error }}</div>
+    {% endif %}
+  </div>
+</body>
+</html>
