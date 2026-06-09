@@ -1,6 +1,6 @@
 # 🔗 URL Shortener
 
-> Project 16 of my Python/Flask portfolio — a web app that shortens long URLs into clean, shareable links.
+> A Flask web app that shortens long URLs into clean, shareable links.
 
 ## Features
 - Paste any valid URL and get a short link instantly
